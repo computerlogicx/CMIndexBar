@@ -8,9 +8,9 @@
 
 @implementation CMIndexBar
 
-@synthesize delegate;
-@synthesize highlightedBackgroundColor;
-@synthesize textColor;
+@synthesize delegate = _delegate;
+@synthesize highlightedBackgroundColor = _highlightedBackgroundColor;
+@synthesize textColor = _textColor;
 
 - (id)init {
     self = [super init];
@@ -38,7 +38,7 @@
 - (void)layoutSubviews 
 {
 	[super layoutSubviews];	
-
+	
 	int i=0;
 	int subcount=0;
 	
@@ -109,11 +109,10 @@
 		UILabel *alphaLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, ypos, self.frame.size.width, 24.0)];
 		alphaLabel.textAlignment = UITextAlignmentCenter;
 		alphaLabel.text = [indexes objectAtIndex:i];
-		alphaLabel.font = [UIFont fontWithName:@"Helvetica" size:13.0];	
+		alphaLabel.font = [UIFont systemFontOfSize:12];	
 		alphaLabel.backgroundColor = [UIColor clearColor];
-		alphaLabel.textColor = textColor;
-		[self addSubview:alphaLabel];	
-		[alphaLabel release];		
+		alphaLabel.textColor = self.textColor;
+		[self addSubview:alphaLabel];
 	}
 }
 
@@ -128,7 +127,7 @@
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	[super touchesEnded:touches withEvent:event];
-
+	
 	UIView *backgroundView = (UIView*)[self viewWithTag:767];
 	[backgroundView removeFromSuperview];
 }
@@ -139,18 +138,17 @@
 	[super touchesBegan:touches withEvent:event];
 	
 	UIView *backgroundview = [[UIView alloc] initWithFrame:CGRectMake(0,0, self.bounds.size.width, self.bounds.size.height)];
-	[backgroundview setBackgroundColor:highlightedBackgroundColor];
-	backgroundview.layer.cornerRadius = self.bounds.size.width/2;
+	[backgroundview setBackgroundColor:self.highlightedBackgroundColor];
+	backgroundview.layer.cornerRadius = 10;
 	backgroundview.layer.masksToBounds = YES;
 	backgroundview.tag = 767;
 	[self addSubview:backgroundview];
 	[self sendSubviewToBack:backgroundview];
-	[backgroundview release];
 	
     if (!self.delegate) return;
 	
     CGPoint touchPoint = [[[event touchesForView:self] anyObject] locationInView:self];
-
+	
 	if(touchPoint.x < 0)
 	{
 		return;
@@ -175,14 +173,14 @@
 		}
 	}
 	
-	[delegate indexSelectionDidChange:self:count:title];
+	[self.delegate indexSelectionDidChange:self index:count-1 title:title];
 }
 
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [super touchesMoved:touches withEvent:event];
-
+	
 	if (!self.delegate) return;
 	
     CGPoint touchPoint = [[[event touchesForView:self] anyObject] locationInView:self];
@@ -211,7 +209,7 @@
 		}
 	}
 	
-	[delegate indexSelectionDidChange:self:count:title];
+	[self.delegate indexSelectionDidChange:self index:count-1 title:title];
 }
 
 @end
