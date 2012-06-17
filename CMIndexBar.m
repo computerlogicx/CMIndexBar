@@ -38,7 +38,7 @@
 - (void)layoutSubviews 
 {
 	[super layoutSubviews];	
-	
+
 	int i=0;
 	int subcount=0;
 	
@@ -127,11 +127,19 @@
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	[super touchesEnded:touches withEvent:event];
-	
-	UIView *backgroundView = (UIView*)[self viewWithTag:767];
-	[backgroundView removeFromSuperview];
+  [self touchesEndedOrCancelled:touches withEvent:event];
 }
 
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
+{
+  [super touchesCancelled:touches withEvent:event];
+  [self touchesEndedOrCancelled:touches withEvent:event];
+}
+
+- (void) touchesEndedOrCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+ 	UIView *backgroundView = (UIView*)[self viewWithTag:767];
+	[backgroundView removeFromSuperview]; 
+}
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
@@ -148,7 +156,7 @@
     if (!self.delegate) return;
 	
     CGPoint touchPoint = [[[event touchesForView:self] anyObject] locationInView:self];
-	
+
 	if(touchPoint.x < 0)
 	{
 		return;
@@ -180,7 +188,7 @@
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [super touchesMoved:touches withEvent:event];
-	
+
 	if (!self.delegate) return;
 	
     CGPoint touchPoint = [[[event touchesForView:self] anyObject] locationInView:self];
