@@ -13,9 +13,12 @@
 @interface CMIndexBar : UIView
 
 - (id)init;
+
 - (id)initWithFrame:(CGRect)frame;
-- (void) setIndexes:(NSArray*)indexes;
-- (void) clearIndex;
+
+- (void)setIndexes:(NSArray *)indexes;
+
+- (void)clearIndex;
 
 @property (nonatomic, unsafe_unretained) id <CMIndexBarDelegate> delegate;
 @property (nonatomic, retain) UIColor *highlightedBackgroundColor;
@@ -23,7 +26,7 @@
 
 @end
 
-@protocol CMIndexBarDelegate<NSObject>
+@protocol CMIndexBarDelegate <NSObject>
 @optional
-- (void)indexSelectionDidChange:(CMIndexBar *) indexBar index:(NSInteger) index title:(NSString *) title;
+- (void)indexSelectionDidChange:(CMIndexBar *)indexBar index:(NSInteger)index title:(NSString *)title;
 @end
