@@ -11,16 +11,14 @@
 @synthesize delegate = _delegate;
 @synthesize highlightedBackgroundColor = _highlightedBackgroundColor;
 @synthesize textColor = _textColor;
+@synthesize enabled = _enabled;
 
 - (id)init
 {
     self = [super init];
     if (self)
     {
-        // Default colors.
-        self.backgroundColor = [UIColor clearColor];
-        self.textColor = [UIColor blackColor];
-        self.highlightedBackgroundColor = [UIColor lightGrayColor];
+        [self initialise];
     }
     return self;
 }
@@ -29,12 +27,18 @@
 {
     if ((self = [super initWithFrame:frame]))
     {
-        // Default colors.
-        self.backgroundColor = [UIColor clearColor];
-        self.textColor = [UIColor blackColor];
-        self.highlightedBackgroundColor = [UIColor lightGrayColor];
+        [self initialise];
     }
     return self;
+}
+
+- (void) initialise
+{
+    // Default colors.
+    self.backgroundColor = [UIColor clearColor];
+    self.textColor = [UIColor blackColor];
+    self.highlightedBackgroundColor = [UIColor lightGrayColor];
+    self.enabled = YES;
 }
 
 - (void)layoutSubviews
@@ -146,6 +150,8 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    if (!self.enabled) return;
+    
     [super touchesBegan:touches withEvent:event];
 
     UIView *backgroundview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];

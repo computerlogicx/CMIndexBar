@@ -23,6 +23,7 @@
 @property (nonatomic, unsafe_unretained) id <CMIndexBarDelegate> delegate;
 @property (nonatomic, retain) UIColor *highlightedBackgroundColor;
 @property (nonatomic, retain) UIColor *textColor;
+@property (nonatomic, assign) BOOL enabled;
 
 @end
 
