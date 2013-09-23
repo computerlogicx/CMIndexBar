@@ -113,7 +113,7 @@
         }
 
         UILabel *alphaLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, ypos, self.frame.size.width, 24.0)];
-        alphaLabel.textAlignment = UITextAlignmentCenter;
+        alphaLabel.textAlignment = NSTextAlignmentCenter;
         alphaLabel.text = [indexes objectAtIndex:i];
         alphaLabel.font = [UIFont systemFontOfSize:12];
         alphaLabel.backgroundColor = [UIColor clearColor];
